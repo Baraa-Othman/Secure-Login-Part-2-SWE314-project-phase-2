@@ -12,6 +12,6 @@ done by group members
 5- Ahmed Ababtain
 6- Albara Osman
 
-Supervised by: Dr. Abdulaziz Alaboudi
+Supervised by: [Dr. Abdulaziz Alaboudi](https://github.com/Alaboudi1)
 
 _Submitted on 2025/5/15_
