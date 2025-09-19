@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Passkey Authentication</title>
+    <link rel="stylesheet" href="./style.css">
+    <script src="https://cdn.jsdelivr.net/npm/@simplewebauthn/browser/dist/bundle/index.umd.min.js"></script>
+</head>
+
+<body>
+    <header class="site-header">
+        <h1>Welcome to Passkey Authentication</h1>
+    </header>
+
+    <div class="login-container">
+        <div id="error" class="error-message" style="display: none;"></div>
+        <div id="success" class="success-message" style="display: none;"></div>
+
+        <h2>🔑 Passkey Login</h2>
+        <div class="input-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username" required>
+        </div>
+
+        <div class="btn-group">
+            <button id="registerBtn" class="signup-btn">Register Passkey</button>
+            <button id="loginBtn" class="login-btn">Login with Passkey</button>
+        </div>
+
+        <hr>
+        <a href="/"><button type="button" class="clear-btn">Back to Traditional Login</button></a>
+    </div>
+
+    <script>
+        const { startRegistration, startAuthentication } = SimpleWebAuthnBrowser;
+
+        // define the registration button click event
+        const registerButton = document.getElementById('registerBtn');
+        const loginButton = document.getElementById('loginBtn');
+
+        const elemSuccess = document.getElementById('success');
+        const elemError = document.getElementById('error');
+        const username = document.getElementById('username');
+
+        registerButton.addEventListener('click', async () => {
+            elemSuccess.innerHTML = '';
+            elemError.innerHTML = '';
+            elemSuccess.style.display = 'none';
+            elemError.style.display = 'none';
+
+            if (!username.value) {
+                elemError.innerHTML = 'Please enter a username';
+                elemError.style.display = 'block';
+                return;
+            }
+
+            // GET registration options from the endpoint that calls
+            // @simplewebauthn/server -> generateRegistrationOptions()
+            const resp = await fetch(`/generate-registration-options?userName=${username.value}`);
+            if (resp.status !== 200) {
+                const errorData = await resp.json();
+                elemError.innerHTML = 'Error: ' + (errorData.error || 'Failed to get registration options');
+                elemError.style.display = 'block';
+                return;
+            }
+
+            const optionsJSON = await resp.json();
+
+            let attResp;
+            try {
+                // Pass the options to the authenticator and wait for a response
+                attResp = await startRegistration(optionsJSON);
+
+            } catch (error) {
+                // Some basic error handling
+                if (error.name === 'InvalidStateError') {
+                    elemError.innerHTML = 'Error: Authenticator was probably already registered by user';
+                } else {
+                    elemError.innerHTML = error;
+                }
+                elemError.style.display = 'block';
+                throw error;
+            }
+
+            // POST the response to the endpoint that calls
+            // @simplewebauthn/server -> verifyRegistrationResponse()
+            const verificationResp = await fetch('/verify-registration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userName: username.value, ...attResp })
+            });
+
+            // Wait for the results of verification
+            const verificationJSON = await verificationResp.json();
+
+            // Show UI appropriate for the `verified` status
+            if (verificationJSON && verificationJSON.verified) {
+                if (verificationJSON.message) {
+                    // Handle the case where credential already exists
+                    elemSuccess.innerHTML = verificationJSON.message;
+                } else {
+                    elemSuccess.innerHTML = 'Success! Passkey registered successfully';
+                }
+                elemSuccess.style.display = 'block';
+            } else {
+                elemError.innerHTML = `Registration failed: ${verificationJSON.error || 'Unknown error'}`;
+                elemError.style.display = 'block';
+            }
+        });
+
+        loginButton.addEventListener('click', async () => {
+            elemSuccess.innerHTML = '';
+            elemError.innerHTML = '';
+            elemSuccess.style.display = 'none';
+            elemError.style.display = 'none';
+
+            if (!username.value) {
+                elemError.innerHTML = 'Please enter a username';
+                elemError.style.display = 'block';
+                return;
+            }
+
+            // GET authentication options from the endpoint that calls
+            // @simplewebauthn/server -> generateAuthenticationOptions()
+            const resp = await fetch('/generate-authentication-options?userName=' + username.value);
+            if (resp.status !== 200) {
+                const errorData = await resp.json();
+                elemError.innerHTML = 'Error: ' + (errorData.error || 'Failed to get authentication options');
+                elemError.style.display = 'block';
+                return;
+            }
+            const optionsJSON = await resp.json();
+
+            let attResp;
+            try {
+                // Pass the options to the authenticator and wait for a response
+                attResp = await startAuthentication(optionsJSON);
+            } catch (error) {
+                // Some basic error handling
+                elemError.innerHTML = error;
+                elemError.style.display = 'block';
+                throw error;
+            }
+
+            // POST the response to the endpoint that calls
+            // @simplewebauthn/server -> verifyAuthenticationResponse()
+            const verificationResp = await fetch('/verify-authentication', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ userName: username.value, ...attResp })
+            });
+
+            // Wait for the results of verification
+            const verificationJSON = await verificationResp.json();
+
+            // Show UI appropriate for the `verified` status
+            if (verificationJSON && verificationJSON.verified) {
+                elemSuccess.innerHTML = 'Success! Redirecting...';
+                elemSuccess.style.display = 'block';
+                setTimeout(() => {
+                    window.location.href = '/passkey-success';
+                }, 1000);
+            } else {
+                elemError.innerHTML = `Authentication failed: ${verificationJSON.error || 'Unknown error'}`;
+                elemError.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+
+</html>

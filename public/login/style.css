@@ -1,0 +1,144 @@
+.site-header {
+    position: fixed; 
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    background-color:transparent;
+    color: #333; 
+    text-align: center; 
+    padding: 10px 0; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); 
+    z-index: 1000; 
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    background: linear-gradient(120deg, #84fab0, #8fd3f4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.login-btn {
+    background: #0ca845;
+    color: #fff;
+}
+
+.clear-btn {
+    background: #ab0420;
+    color: #fff;
+}
+
+.signup-btn {
+    background: #076fa4;
+    color: #fff;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.signup-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    width: 300px;
+    text-align: center;
+    margin: auto;
+}
+
+.error-message {
+    background-color: #ffdddd;
+    color: #f44336;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+.success-message {
+    background-color: #ddffdd;
+    color: #4CAF50;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    text-align: center;
+}
+
+hr {
+    margin: 20px 0;
+    border: none;
+    border-top: 1px solid #eee;
+
+}
+
+
+
+.google-login-btn {
+    background: linear-gradient(120deg, #6b0303, #e64500);
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Adds spacing between the logo and text */
+    transition: background 0.3s;
+}
+
+.google-login-btn:hover {
+    opacity: 0.9;
+}
+
+.google-logo {
+    width: 20px; /* Adjust size as needed */
+    height: 20px;
+}
+
+

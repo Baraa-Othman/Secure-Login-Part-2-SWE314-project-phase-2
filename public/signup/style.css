@@ -1,0 +1,157 @@
+.site-header {
+    color: #222;
+    padding: 20px 0;
+    position: fixed;
+    width: 100%;
+    text-align: center;
+    top: 0;
+    left: 0;
+    z-index: 10;
+    box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+
+   font-style: italic;
+}
+
+body {
+    font-family: 'Arial', sans-serif;
+    height: 100vh;
+    background: linear-gradient(120deg, #84fab0, #8fd3f4);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.login-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    width: 300px;
+    text-align: center;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    margin-bottom: 8px;
+}
+
+input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+}
+
+.btn-group {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 20px;
+}
+
+button {
+    cursor: pointer;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    transition: background 0.3s;
+}
+
+.login-btn {
+    background: #0ca845;
+    color: #fff;
+}
+
+.return-btn {
+    background-color: green;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.return-btn:hover {
+    background-color: darkgreen;
+}
+
+.clear-btn {
+    background: #ab0420;
+    color: #fff;
+}
+
+.signup-btn {
+    background: #076fa4;
+    color: #fff;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.signup-container {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    width: 300px;
+    min-height: 400px;
+    text-align: center;
+    margin: auto;
+}
+.error-message {
+    color: #ab0420;
+    margin-bottom: 20px;
+}
+
+
+.separator {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 20px 0; /* Adds spacing above and below the separator */
+}
+
+hr {
+    flex-grow: 1;
+    border: none;
+    border-top: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.separator hr {
+    flex-grow: 1;
+    border: none;
+    border-top: 1px solid rgba(128, 128, 128, 0.5);
+}
+
+.separator span {
+    margin: 0 10px;
+    color: rgba(128, 128, 128, 0.8);
+    font-weight: bold;
+}
+
+.passkey-btn {
+    background: linear-gradient(120deg, #0e0339, #5e00f6);
+    color: #fff;
+    width: 100%;
+    height: 40px;
+    margin-top: 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 1.1rem;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px; /* Adds spacing between the logo and text */
+    transition: background 0.3s;
+}
+
+.passkey-btn:hover {
+    opacity: 0.9;
+    background-color: #333; /* Slightly lighter background on hover */
+}
