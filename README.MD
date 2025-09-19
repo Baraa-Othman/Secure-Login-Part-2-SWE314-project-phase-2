@@ -3,7 +3,7 @@
 
 The project is the second phase of Software Security Engineering course (SWE314) in KSU, it is a team based project that focuses on providing a secure login to the user on the web using modern techs like WebAuthn & OAuth2.0, the project consists of **HTML/CSS** website powered by Node.js functionality.
 ***
-##To install all dependancies write the following command:
+To install all dependancies write the following command:
 ```
 npm install express express-rate-limit express-session speakeasy qrcode cookie-parser querystring @simplewebauthn/server
 ```
